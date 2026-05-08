@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мисс РГУ 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Общие токены ── */
+:root{
+  --bg:#0E0E0E;--bg2:#161616;--bg3:#1E1E1E;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+  --gold:#D4AF37;--gold2:#F5E6A3;--silver:#A8A8A8;--bronze:#C8956C;
+  --text:#E8E4DC;--muted:#8A8880;--muted2:#B8B4AC;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(212,175,55,0.06) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 90% 100%,rgba(212,175,55,0.04) 0%,transparent 60%);pointer-events:none;z-index:0}
+
+/* ── Навигация ── */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(14,14,14,0.92);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  max-width:900px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:52px;
+}
+.nav-brand{
+  font-size:11px;font-weight:600;letter-spacing:.25em;
+  color:var(--gold);text-transform:uppercase;
+}
+.nav-tabs{display:flex;gap:0}
+.nav-tab{
+  padding:0 20px;height:52px;
+  display:flex;align-items:center;
+  font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;
+  background:none;border-top:none;border-left:none;border-right:none;
+  border-bottom:2px solid transparent;
+}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* ── Секции ── */
+.section{display:none}
+.section.active{display:block}
+
+/* ══════════════════════
+   РЕЙТИНГ
+══════════════════════ */
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 20px 60px}
+
+header{text-align:center;padding:48px 0 36px}
+.logo-line{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px}
+.logo-divider{height:1px;width:60px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.logo-rgu{font-size:11px;font-weight:500;letter-spacing:.25em;color:var(--gold);text-transform:uppercase}
+.event-title{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,8vw,72px);font-weight:300;letter-spacing:.04em;line-height:1;margin-bottom:8px}
+.event-title em{font-style:italic;color:var(--gold);font-weight:300}
+.event-sub{font-size:11px;font-weight:400;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-bottom:28px}
+.status-pill{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border:1px solid var(--border2);border-radius:40px;font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--muted2);text-transform:uppercase}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+
+.stages-bar{display:flex;border:1px solid var(--border2);border-radius:12px;overflow:hidden;margin-bottom:40px;height:52px}
+.stage-seg{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:all .3s;cursor:default}
+.stage-seg:hover{background:rgba(255,255,255,.03);color:var(--text)}
+.stage-seg .pct{font-size:13px;font-weight:600;color:var(--gold)}
+
+.rating-list{display:flex;flex-direction:column;gap:8px}
+.card{
+  position:relative;border:1px solid var(--border);border-radius:12px;
+  background:var(--bg2);overflow:hidden;
+  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+  opacity:0;transform:translateY(16px);
+}
+.card.visible{opacity:1;transform:translateY(0);transition:opacity .5s ease,transform .5s ease,box-shadow .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-2px)}
+.card{box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.card.top1{border-color:rgba(212,175,55,.35);background:linear-gradient(135deg,rgba(212,175,55,.08) 0%,var(--bg2) 55%);box-shadow:0 0 0 1px rgba(212,175,55,.08),0 8px 32px rgba(0,0,0,.4),0 0 40px rgba(212,175,55,.08)}
+.card.top1:hover{box-shadow:0 0 0 1px rgba(212,175,55,.15),0 12px 40px rgba(0,0,0,.5),0 0 60px rgba(212,175,55,.12);transform:translateY(-2px)}
+.card.top1 .score-main{text-shadow:0 0 20px rgba(212,175,55,.35)}
+.card.top2{border-color:rgba(168,168,168,.2);background:linear-gradient(135deg,rgba(168,168,168,.04) 0%,var(--bg2) 60%);box-shadow:0 4px 20px rgba(0,0,0,.35)}
+.card.top3{border-color:rgba(200,149,108,.2);background:linear-gradient(135deg,rgba(200,149,108,.05) 0%,var(--bg2) 60%);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.card:hover{border-color:var(--border2)}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border)}
+.card.top1::before{background:linear-gradient(180deg,var(--gold),rgba(212,175,55,.4))}
+.card.top2::before{background:var(--silver)}.card.top3::before{background:var(--bronze)}
+.card-inner{display:grid;grid-template-columns:64px 1fr auto;align-items:center;padding:16px 20px 16px 24px;gap:16px}
+.place{text-align:center}
+.place-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;line-height:1}
+.card.top1 .place-num{color:var(--gold)}.card.top2 .place-num{color:var(--silver)}.card.top3 .place-num{color:var(--bronze)}
+.card:not(.top1):not(.top2):not(.top3) .place-num{color:var(--muted)}
+.place-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.card-info{min-width:0}
+.card-name{font-size:16px;font-weight:500;letter-spacing:.02em;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card.top1 .card-name{color:var(--gold2)}
+.card-fac{font-size:11px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.breakdown-bar{display:flex;height:4px;border-radius:2px;overflow:hidden;gap:1px;max-width:340px}
+.bb-pre{background:rgba(212,175,55,.5);border-radius:2px}.bb-live{background:rgba(212,175,55,.9);border-radius:2px}
+.breakdown-labels{display:flex;gap:14px;margin-top:6px}
+.bl-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted)}
+.bl-dot{width:6px;height:6px;border-radius:50%}
+.bl-dot.pre{background:rgba(212,175,55,.5)}.bl-dot.live{background:var(--gold)}
+.card-score{text-align:right;flex-shrink:0}
+.score-main{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;line-height:1;letter-spacing:-.01em}
+.card.top1 .score-main{color:var(--gold)}.card.top2 .score-main{color:var(--silver)}.card.top3 .score-main{color:var(--bronze)}
+.card:not(.top1):not(.top2):not(.top3) .score-main{color:var(--muted2)}
+.score-unit{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+.about-block{margin-top:40px;padding:24px;border:1px solid var(--border);border-radius:12px;background:var(--bg2)}
+.about-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.about-text{font-size:13px;line-height:1.75;color:var(--muted2)}
+.about-text b{color:var(--text);font-weight:500}
+
+.legend{margin-top:16px;padding:20px 24px;border:1px solid var(--border);border-radius:12px;background:var(--bg2)}
+.legend-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.legend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.legend-item{display:flex;flex-direction:column;gap:3px}
+.legend-name{font-size:11px;font-weight:500;color:var(--text)}
+.legend-pct{font-size:20px;font-weight:300;font-family:'Cormorant Garamond',serif;color:var(--gold)}
+.legend-type{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+.loading-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:13px;letter-spacing:.1em}
+.loading-state .spinner{width:24px;height:24px;border:2px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.error-state{text-align:center;padding:40px 20px;color:var(--muted2);font-size:13px;line-height:1.6}
+
+/* ══════════════════════
+   ИНФОГРАФИКА
+══════════════════════ */
+.page{max-width:760px;margin:0 auto;padding:48px 24px 64px;position:relative}
+
+.top-line{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:20px}
+.tl-rule{height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.tl-text{font-size:10px;font-weight:600;letter-spacing:.3em;color:var(--gold);text-transform:uppercase}
+
+.info-h1{text-align:center;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(30px,5vw,50px);line-height:1.1;letter-spacing:.04em;margin-bottom:6px}
+.info-h1 em{font-style:italic;color:var(--gold);font-weight:300}
+.info-sub{text-align:center;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.intro-text{font-size:14px;line-height:1.75;color:var(--muted2);text-align:center;max-width:580px;margin:0 auto 48px}
+.intro-text b{color:var(--text);font-weight:500}
+
+.pie-section{display:grid;grid-template-columns:260px 1fr;gap:32px;align-items:center;margin-bottom:48px}
+.stage-list{display:flex;flex-direction:column;gap:10px}
+.sl-item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.sl-item.visible{opacity:1;transform:translateY(0)}
+.sl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sl-name{font-size:12px;font-weight:500;color:var(--text)}
+.sl-type{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sl-pct{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--gold);min-width:40px;text-align:right}
+.sl-bar{height:3px;border-radius:2px;margin-top:3px}
+
+.section-title{font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;text-align:center}
+.steps{display:flex;flex-direction:column;gap:0;margin-bottom:48px}
+.step{display:grid;grid-template-columns:40px 1fr;gap:0;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.step.visible{opacity:1;transform:translateY(0)}
+.step-num-col{display:flex;flex-direction:column;align-items:center}
+.step-num{width:32px;height:32px;border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--gold);background:var(--bg2);flex-shrink:0;z-index:1}
+.step-line{flex:1;width:1px;background:var(--border);margin:4px 0}
+.step:last-child .step-line{display:none}
+.step-body{padding:0 0 28px 14px}
+.step-label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px;padding-top:6px}
+.step-desc{font-size:13px;line-height:1.7;color:var(--text);margin-bottom:10px}
+.formula-box{background:var(--bg3);border:1px solid rgba(212,175,55,.2);border-radius:8px;padding:10px 14px;font-size:12px;font-weight:500;color:var(--gold2);letter-spacing:.03em;box-shadow:0 0 20px rgba(212,175,55,.04) inset}
+
+.example-section{margin-bottom:48px}
+.ex-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin-top:14px}
+.ex-cell{display:flex;flex-direction:column;align-items:center;gap:3px}
+.ex-place-box{width:100%;aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;font-family:'Cormorant Garamond',serif}
+.ex-score{font-size:9px;color:var(--muted2);font-weight:500}
+
+.judges-row{display:flex;gap:5px;margin:10px 0 4px}
+.judge-bubble{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;border:1px solid var(--border);color:var(--text);background:var(--bg3)}
+
+.live-block{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:20px 24px;margin-bottom:32px}
+.live-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.live-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.live-row:last-child{border-bottom:none}
+.live-name{font-size:13px;font-weight:500;color:var(--text)}
+.live-fac{font-size:10px;color:var(--muted);margin-top:2px}
+.live-score{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--gold)}
+.live-place{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;margin-right:12px;flex-shrink:0}
+.lp-1{background:rgba(212,175,55,.15);color:var(--gold)}.lp-2{background:rgba(168,168,168,.1);color:#A8A8A8}.lp-3{background:rgba(200,149,108,.1);color:#C8956C}.lp-n{background:rgba(255,255,255,.04);color:var(--muted)}
+.live-left{display:flex;align-items:center}
+.loading-mini{color:var(--muted);font-size:12px;text-align:center;padding:16px 0}
+.spinner-mini{display:inline-block;width:14px;height:14px;border:1.5px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;vertical-align:middle;margin-right:6px}
+
+.shield-section{margin-bottom:48px}
+.shield-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.shield-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.shield-card.visible{opacity:1;transform:translateY(0)}
+.sc-icon{font-size:20px;margin-bottom:8px}
+.sc-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:6px}
+.sc-desc{font-size:12px;color:var(--muted2);line-height:1.6}
+
+.footer-rule{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:40px 0 20px}
+.footer-text{text-align:center;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.footer-text span{color:var(--gold)}
+
+/* ── Footer общий ── */
+footer{text-align:center;padding:32px 0 0;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+footer span{color:var(--gold)}
+
+/* ── Responsive ── */
+@media(max-width:560px){
+  .card-inner{grid-template-columns:52px 1fr auto;gap:10px;padding:12px 14px 12px 18px}
+  .event-title{font-size:38px}.score-main{font-size:28px}.stages-bar{display:none}
+  .pie-section{grid-template-columns:1fr}.pie-wrap{display:flex;justify-content:center}
+  .shield-grid{grid-template-columns:1fr}
+  .nav-brand{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Навигация -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Мисс РГУ · 2026</div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showSection('rating')">Рейтинг</button>
+      <button class="nav-tab" onclick="showSection('info')">Система оценивания</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     СЕКЦИЯ: РЕЙТИНГ
+══════════════════════════════════════ -->
+<div id="sec-rating" class="section active">
+<div class="wrap">
+
+<header>
+  <div class="logo-line">
+    <div class="logo-divider"></div>
+    <div class="logo-rgu">РГУ имени С. А. Есенина</div>
+    <div class="logo-divider"></div>
+  </div>
+  <h1 class="event-title">Мисс <em>РГУ</em></h1>
+  <div class="event-sub">2026 · итоговый рейтинг</div>
+  <div class="status-pill">
+    <div class="status-dot"></div>
+    <span id="statusText">Загрузка данных...</span>
+  </div>
+</header>
+
+<div class="stages-bar" id="stagesBar">
+  <div class="stage-seg" style="flex:1;font-size:10px;color:var(--muted)">Загрузка весов...</div>
+</div>
+
+<div class="rating-list" id="ratingList">
+  <div class="loading-state">
+    <div class="spinner"></div>
+    Подтягиваем данные из таблицы...
+  </div>
+</div>
+
+<div class="about-block">
+  <div class="about-title">Как считается результат</div>
+  <div class="about-text">
+    Итоговый балл складывается из двух частей. <b>45%</b> — это предэтапы: зачётка, интеллектуальная битва и спорт. Их результаты фиксируются до финала и жюри на них не влияет. Оставшиеся <b>55%</b> дают судьи — за самопрезентацию, дефиле и творческий номер. Полоска под именем участника показывает соотношение: светлая часть — предэтапы, яркая — жюри.
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-title">Веса этапов</div>
+  <div class="legend-grid" id="legendGrid">
+    <div class="legend-item"><div class="legend-name">Зачётная книжка</div><div class="legend-pct">10%</div><div class="legend-type">Предэтап</div></div>
+    <div class="legend-item"><div class="legend-name">Интеллектуальная битва</div><div class="legend-pct">17%</div><div class="legend-type">Предэтап</div></div>
+    <div class="legend-item"><div class="legend-name">Спорт</div><div class="legend-pct">18%</div><div class="legend-type">Предэтап</div></div>
+    <div class="legend-item"><div class="legend-name">Самопрезентация</div><div class="legend-pct">18%</div><div class="legend-type">Очный · жюри</div></div>
+    <div class="legend-item"><div class="legend-name">Дефиле</div><div class="legend-pct">18%</div><div class="legend-type">Очный · жюри</div></div>
+    <div class="legend-item"><div class="legend-name">Творческий номер</div><div class="legend-pct">19%</div><div class="legend-type">Очный · жюри</div></div>
+  </div>
+</div>
+
+<footer>
+  <p>Студенческий клуб РГУ · <span>Мисс РГУ 2026</span> · Рязань</p>
+</footer>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     СЕКЦИЯ: ИНФОГРАФИКА
+══════════════════════════════════════ -->
+<div id="sec-info" class="section">
+<div class="page">
+
+<div class="top-line">
+  <div class="tl-rule"></div>
+  <div class="tl-text">Система судейства</div>
+  <div class="tl-rule"></div>
+</div>
+<h1 class="info-h1">Система оценивания <em>Мисс РГУ</em></h1>
+<div class="info-sub">Структурированная методика · 2026</div>
+
+<p class="intro-text">
+  Конкурс включает несколько этапов подготовки — зачётка, интеллектуальный этап, спорт — и финальное шоу с тремя конкурсными заданиями. Итоговый результат учитывает <b>весь путь участника</b>: подготовительные этапы дают 45% итога, финальные выступления — 55%. Каждому этапу заранее присвоен фиксированный вес, что делает систему понятной для участников, зрителей и членов жюри.
+</p>
+
+<div class="pie-section">
+  <div class="pie-wrap" style="position:relative">
+    <canvas id="pieChart" width="260" height="260" style="display:block;cursor:pointer"></canvas>
+    <div id="pieTooltip" style="
+      position:absolute;pointer-events:none;opacity:0;
+      transition:opacity .18s ease;
+      background:rgba(22,22,22,.88);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      border-radius:10px;padding:8px 12px;
+      font-family:'Montserrat',sans-serif;white-space:nowrap;
+      box-shadow:0 10px 30px rgba(0,0,0,.4),0 0 0 1px rgba(212,175,55,.14);
+      transform:translate(-50%,-130%);
+    ">
+      <div id="tipName" style="font-size:10px;font-weight:500;color:#E8E4DC;margin-bottom:2px;letter-spacing:.03em"></div>
+      <div id="tipPct"  style="font-size:20px;font-weight:300;color:#D4AF37;font-family:'Cormorant Garamond',serif;line-height:1.1"></div>
+      <div id="tipType" style="font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#8A8880;margin-top:3px"></div>
+    </div>
+  </div>
+  <div class="stage-list" id="stageList">
+    <div style="font-size:11px;color:var(--muted);padding:8px 0">Загрузка весов...</div>
+  </div>
+</div>
+
+<div class="section-title">Как считается результат</div>
+<div class="steps">
+  <div class="step">
+    <div class="step-num-col"><div class="step-num">1</div><div class="step-line"></div></div>
+    <div class="step-body">
+      <div class="step-label">Подготовительные этапы</div>
+      <div class="step-desc">По итогам каждого предэтапа участники получают места с 1-го по 9-е. Место переводится в очки от 0 до 100 — стандартный приём нормализации, который используется в спортивных и академических рейтингах. Первое место даёт 100 очков, девятое — около 11.</div>
+      <div class="formula-box">Очки = ((9 − место + 1) ÷ 9) × 100</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num-col"><div class="step-num">2</div><div class="step-line"></div></div>
+    <div class="step-body">
+      <div class="step-label">Оценки членов жюри</div>
+      <div class="step-desc">На финале каждый член жюри оценивает выступление по шкале от 1 до 5 — отдельно самопрезентацию, дефиле и творческий номер. Все оценки учитываются с равным весом, итоговый балл переводится в шкалу до 100 очков.</div>
+      <div class="judges-row">
+        <div class="judge-bubble">4</div><div class="judge-bubble">5</div>
+        <div class="judge-bubble">4</div><div class="judge-bubble">3</div>
+        <div class="judge-bubble">5</div><div class="judge-bubble">4</div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px">Среднее = 4.17 → 4.17 × 20 = 83.3 очка</div>
+      <div class="formula-box">Балл = СРЕДНЕЕ(6 судей) × 20 → шкала 0–100</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num-col"><div class="step-num">3</div><div class="step-line"></div></div>
+    <div class="step-body">
+      <div class="step-label">Итоговый балл</div>
+      <div class="step-desc">Все показатели приведены к единой шкале, каждый умножается на свой вес и складывается в итоговый балл. Веса фиксируются до начала конкурса и публикуются в регламенте.</div>
+      <div class="formula-box">Итог = Σ (балл_этапа × вес_этапа)</div>
+    </div>
+  </div>
+</div>
+
+<div class="example-section">
+  <div class="section-title">Места → очки (пример для 9 участников)</div>
+  <div class="ex-grid" id="exGrid"></div>
+</div>
+
+<div class="live-block">
+  <div class="live-title">Актуальный рейтинг</div>
+  <div id="liveRating"><div class="loading-mini"><span class="spinner-mini"></span>Загружаем данные...</div></div>
+</div>
+
+<div class="shield-section">
+  <div class="section-title">Что даёт структурированная система</div>
+  <div class="shield-grid">
+    <div class="shield-card"><div class="sc-icon">🏛️</div><div class="sc-title">Комплексная оценка</div><div class="sc-desc">Конкурс оценивает участника по нескольким направлениям — академическому, интеллектуальному, спортивному и творческому. Итоговый результат отражает всестороннее развитие.</div></div>
+    <div class="shield-card"><div class="sc-icon">📐</div><div class="sc-title">Единая система измерения</div><div class="sc-desc">Все показатели приводятся к единой шкале от 0 до 100. Это исключает математические несоответствия при подсчёте и делает итоговый балл корректным.</div></div>
+    <div class="shield-card"><div class="sc-icon">📋</div><div class="sc-title">Прозрачный регламент</div><div class="sc-desc">Веса этапов публикуются до начала конкурса. Участники, факультеты и зрители заранее понимают правила.</div></div>
+    <div class="shield-card"><div class="sc-icon">📈</div><div class="sc-title">Репутация конкурса</div><div class="sc-desc">Структурированная система судейства — стандарт крупных студенческих конкурсов федерального уровня.</div></div>
+  </div>
+</div>
+
+<div class="footer-rule"></div>
+<div class="footer-text"><span>Мисс РГУ 2026</span> · Студенческий клуб РГУ имени С. А. Есенина · Рязань</div>
+
+</div>
+</div>
+
+<script>
+// ─── Конфиг ───────────────────────────────────────
+const SHEET_ID       = "1gIZ5i2phjIFm59qRQkxwXz8NgWEhMJMmL_DyfvpYnz8";
+const SHEET_NAME     = "Итог";
+const RANGE          = "B3:G11";
+const SETTINGS_SHEET = "Настройки";
+const SETTINGS_RANGE = "B3:D8";
+const USE_DEMO       = false;
+// ──────────────────────────────────────────────────
+
+// ── Навигация ──
+function showSection(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
+  document.getElementById("sec-" + id).classList.add("active");
+  document.querySelectorAll(".nav-tab").forEach(t => {
+    if (t.textContent.trim() === (id === "rating" ? "Рейтинг" : "Система оценивания"))
+      t.classList.add("active");
+  });
+  // Переинициализируем scroll reveal при переключении
+  setTimeout(initScrollReveal, 50);
+}
+
+// ── Scroll reveal ──
+function initScrollReveal() {
+  const targets = document.querySelectorAll(".step:not(.revealed),.shield-card:not(.revealed),.sl-item:not(.revealed)");
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, idx) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add("visible","revealed"), idx * 70);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  targets.forEach(el => obs.observe(el));
+}
+
+// ── Константы диаграммы ──
+const STAGE_TYPES  = ["Предэтап","Предэтап","Предэтап","Очный · жюри","Очный · жюри","Очный · жюри"];
+const STAGE_COLORS = ["rgba(212,175,55,0.30)","rgba(212,175,55,0.42)","rgba(212,175,55,0.52)","rgba(212,175,55,0.70)","rgba(212,175,55,0.82)","rgba(212,175,55,1.00)"];
+const STAGE_LABELS_SHORT = ["Зачётка","Интеллект","Спорт","Презент.","Дефиле","Творческий"];
+const DEMO_STAGES = [
+  {name:"Зачётная книжка",pct:10},{name:"Интеллектуальная битва",pct:17},{name:"Спорт",pct:18},
+  {name:"Самопрезентация",pct:18},{name:"Дефиле",pct:18},{name:"Творческий номер",pct:19},
+];
+const PIE_COLORS       = ["rgba(212,175,55,0.18)","rgba(212,175,55,0.30)","rgba(212,175,55,0.44)","rgba(212,175,55,0.62)","rgba(212,175,55,0.78)","rgba(212,175,55,0.96)"];
+const PIE_COLORS_HOVER = ["rgba(212,175,55,0.34)","rgba(212,175,55,0.50)","rgba(212,175,55,0.64)","rgba(212,175,55,0.82)","rgba(212,175,55,0.96)","rgba(238,208,88,1.00)"];
+const GAP=0.022,OUTER_R=105,INNER_R=58,CX=130,CY=130;
+
+let _pieStages=[],_hoveredSeg=-1,_hoverAnim={},_rafId=null,_centerAlpha=0;
+
+function easeOut(t){return 1-Math.pow(1-t,3)}
+function getSegAngles(stages){
+  const total=stages.reduce((s,x)=>s+x.pct,0);let start=-Math.PI/2;
+  return stages.map(s=>{const sweep=(s.pct/total)*Math.PI*2-GAP;const sa=start+GAP/2;const ea=sa+sweep;const mid=sa+sweep/2;start+=sweep+GAP;return{sa,ea,mid,sweep}});
+}
+
+function drawPieFrame(stages,hoverOffsets,centerAlpha){
+  const canvas=document.getElementById("pieChart");if(!canvas)return;
+  const ctx=canvas.getContext("2d");
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const angles=getSegAngles(stages);
+  stages.forEach((s,i)=>{
+    const{sa,ea,mid}=angles[i];const t=hoverOffsets[i]||0;
+    const dx=Math.cos(mid)*4*t,dy=Math.sin(mid)*4*t,r=OUTER_R+5*t;
+    const baseA=parseFloat(PIE_COLORS[i].match(/[\d.]+\)$/)[0]);
+    const hovA=parseFloat(PIE_COLORS_HOVER[i].match(/[\d.]+\)$/)[0]);
+    const alpha=baseA+(hovA-baseA)*t;
+    const fill=i===5&&t>0.4?`rgba(${Math.round(212+26*t)},${Math.round(175+33*t)},${Math.round(55+33*t)},${alpha})`:`rgba(212,175,55,${alpha})`;
+    ctx.save();ctx.translate(dx,dy);
+    if(t>0.02){ctx.shadowColor="rgba(212,175,55,0.22)";ctx.shadowBlur=18*t;}else{ctx.shadowBlur=0;}
+    ctx.beginPath();ctx.arc(CX,CY,r,sa,ea);ctx.arc(CX,CY,INNER_R,ea,sa,true);ctx.closePath();
+    ctx.fillStyle=fill;ctx.fill();ctx.shadowBlur=0;
+    ctx.strokeStyle=`rgba(212,175,55,${0.12+0.35*t})`;ctx.lineWidth=0.5+t*0.8;ctx.stroke();
+    ctx.restore();
+  });
+  ctx.beginPath();ctx.arc(CX,CY,INNER_R,0,Math.PI*2);ctx.fillStyle="#0F0F0F";ctx.fill();
+  const grad=ctx.createRadialGradient(CX,CY,INNER_R*0.5,CX,CY,INNER_R);
+  grad.addColorStop(0,"rgba(0,0,0,0)");grad.addColorStop(1,"rgba(0,0,0,0.30)");
+  ctx.beginPath();ctx.arc(CX,CY,INNER_R,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();
+  ctx.beginPath();ctx.arc(CX,CY,INNER_R,0,Math.PI*2);ctx.strokeStyle="rgba(212,175,55,0.16)";ctx.lineWidth=1;ctx.stroke();
+  if(centerAlpha>0){
+    ctx.globalAlpha=centerAlpha;ctx.textAlign="center";
+    ctx.shadowColor="rgba(212,175,55,0.25)";ctx.shadowBlur=20;ctx.fillStyle="#D4AF37";
+    ctx.font="300 32px 'Cormorant Garamond', serif";ctx.fillText("100%",CX,CY+4);
+    ctx.shadowBlur=0;ctx.fillStyle="#8A8880";ctx.font="500 7px 'Montserrat', sans-serif";
+    ctx.fillText("итог",CX,CY+18);ctx.globalAlpha=1;
+  }
+}
+
+function animateLoad(stages){
+  const canvas=document.getElementById("pieChart");if(!canvas)return;
+  const dpr=window.devicePixelRatio||1;canvas._dpr=dpr;
+  canvas.width=260*dpr;canvas.height=260*dpr;canvas.style.width="260px";canvas.style.height="260px";
+  const ctx=canvas.getContext("2d");ctx.scale(dpr,dpr);
+  const total=750,start=performance.now();
+  function frame(now){
+    const t=Math.min((now-start)/total,1);ctx.clearRect(0,0,260,260);
+    const angles=getSegAngles(stages);const ringT=Math.min(t/0.38,1);
+    stages.forEach((s,i)=>{
+      const{sa,ea}=angles[i];const segP=Math.max(0,Math.min((ringT-i*0.055),1));
+      const sweep=(ea-sa)*easeOut(segP);if(sweep<=0)return;
+      ctx.beginPath();ctx.arc(CX,CY,OUTER_R,sa,sa+sweep);ctx.arc(CX,CY,INNER_R,sa+sweep,sa,true);ctx.closePath();
+      ctx.fillStyle=PIE_COLORS[i];ctx.fill();ctx.strokeStyle="rgba(212,175,55,0.18)";ctx.lineWidth=0.5;ctx.stroke();
+    });
+    ctx.beginPath();ctx.arc(CX,CY,INNER_R,0,Math.PI*2);ctx.fillStyle="#0F0F0F";ctx.fill();
+    const gr=ctx.createRadialGradient(CX,CY,INNER_R*0.5,CX,CY,INNER_R);
+    gr.addColorStop(0,"rgba(0,0,0,0)");gr.addColorStop(1,"rgba(0,0,0,0.30)");
+    ctx.beginPath();ctx.arc(CX,CY,INNER_R,0,Math.PI*2);ctx.fillStyle=gr;ctx.fill();
+    ctx.beginPath();ctx.arc(CX,CY,INNER_R,0,Math.PI*2);ctx.strokeStyle="rgba(212,175,55,0.16)";ctx.lineWidth=1;ctx.stroke();
+    const cT=Math.max(0,(t-0.62)/0.38);_centerAlpha=easeOut(cT);
+    if(_centerAlpha>0){
+      ctx.globalAlpha=_centerAlpha;ctx.textAlign="center";
+      ctx.shadowColor="rgba(212,175,55,0.25)";ctx.shadowBlur=20;ctx.fillStyle="#D4AF37";
+      ctx.font="300 32px 'Cormorant Garamond', serif";ctx.fillText("100%",CX,CY+4);
+      ctx.shadowBlur=0;ctx.fillStyle="#8A8880";ctx.font="500 7px 'Montserrat', sans-serif";
+      ctx.fillText("итог",CX,CY+18);ctx.globalAlpha=1;
+    }
+    if(t<1)requestAnimationFrame(frame);else{_centerAlpha=1;drawPieFrame(stages,{},1);}
+  }
+  requestAnimationFrame(frame);
+}
+
+function startHoverAnim(stages,targetSeg){
+  if(_rafId)cancelAnimationFrame(_rafId);const SPEED=0.09;
+  function tick(){
+    let needMore=false;
+    for(let i=0;i<stages.length;i++){
+      const target=i===targetSeg?1:0;const cur=_hoverAnim[i]||0;const diff=target-cur;
+      if(Math.abs(diff)<0.003){_hoverAnim[i]=target;}else{_hoverAnim[i]=cur+diff*SPEED*3;needMore=true;}
+    }
+    drawPieFrame(stages,_hoverAnim,_centerAlpha);
+    if(needMore)_rafId=requestAnimationFrame(tick);else _rafId=null;
+  }
+  _rafId=requestAnimationFrame(tick);
+}
+
+function getHoveredSegment(canvas,stages,mx,my){
+  const rect=canvas.getBoundingClientRect();
+  const x=mx-rect.left-canvas.width/2,y=my-rect.top-canvas.height/2;
+  const dist=Math.sqrt(x*x+y*y);if(dist<INNER_R||dist>OUTER_R+10)return -1;
+  let angle=Math.atan2(y,x);if(angle<-Math.PI/2)angle+=Math.PI*2;
+  const angles=getSegAngles(stages);
+  for(let i=0;i<angles.length;i++){if(angle>=angles[i].sa&&angle<=angles[i].ea)return i;}
+  return -1;
+}
+
+function initPieInteraction(stages){
+  const canvas=document.getElementById("pieChart");const tooltip=document.getElementById("pieTooltip");
+  if(!canvas||!tooltip)return;
+  animateLoad(stages);
+  function getMid(i){return getSegAngles(stages)[i]?.mid||0;}
+  canvas.addEventListener("mousemove",(e)=>{
+    const seg=getHoveredSegment(canvas,stages,e.clientX,e.clientY);
+    if(seg!==_hoveredSeg){_hoveredSeg=seg;startHoverAnim(stages,seg);}
+    if(seg>=0){
+      const mid=getMid(seg);const tipR=122;
+      const tx=CX+Math.cos(mid)*tipR,ty=CY+Math.sin(mid)*tipR;
+      const wrap=canvas.closest(".pie-wrap")||canvas.parentElement;
+      const wrapW=wrap.offsetWidth||260,wrapH=wrap.offsetHeight||260;
+      const tipW=tooltip.offsetWidth||120,tipH=tooltip.offsetHeight||70;
+      tooltip.style.left=Math.max(tipW/2+4,Math.min(tx,wrapW-tipW/2-4))+"px";
+      tooltip.style.top=Math.max(tipH+8,Math.min(ty,wrapH-4))+"px";
+      tooltip.style.opacity="1";
+      document.getElementById("tipName").textContent=stages[seg].name;
+      document.getElementById("tipPct").textContent=stages[seg].pct+"%";
+      document.getElementById("tipType").textContent=STAGE_TYPES[seg]||"";
+    }else{tooltip.style.opacity="0";}
+  });
+  canvas.addEventListener("mouseleave",()=>{_hoveredSeg=-1;startHoverAnim(stages,-1);tooltip.style.opacity="0";});
+}
+
+// ── Рендер полоски рейтинга ──
+function renderStagesBar(stages){
+  const bar=document.getElementById("stagesBar");if(!bar)return;
+  bar.innerHTML=stages.map((s,i)=>{
+    const isPre=i<3;const bg=isPre?"rgba(255,255,255,.02)":"rgba(212,175,55,.04)";
+    const borderR=i<5?`border-right:1px solid var(--${i===2?"border2":"border"})`:""
+    return`<div class="stage-seg" style="flex:${s.pct};background:${bg};${borderR}"><span class="pct">${s.pct}%</span><span>${STAGE_LABELS_SHORT[i]||s.name}</span></div>`;
+  }).join("");
+}
+
+// ── Рендер списка диаграммы ──
+function renderStages(stages){
+  const list=document.getElementById("stageList");if(!list)return;
+  const preTotal=stages.slice(0,3).reduce((s,x)=>s+x.pct,0);
+  const liveTotal=stages.slice(3,6).reduce((s,x)=>s+x.pct,0);
+  let html="";
+  stages.forEach((s,i)=>{
+    if(i===3)html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid var(--border);margin:4px 0"><span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Предэтапы итого</span><span style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold)">${preTotal}%</span></div>`;
+    const barW=Math.round(s.pct*2);
+    html+=`<div class="sl-item"><div class="sl-dot" style="background:${STAGE_COLORS[i]}"></div><div><div class="sl-name">${s.name}</div><div class="sl-type">${STAGE_TYPES[i]}</div><div class="sl-bar" style="width:${barW}%;background:${STAGE_COLORS[i]}"></div></div><div class="sl-pct">${s.pct}%</div></div>`;
+  });
+  html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid var(--border);margin:4px 0"><span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Очные итого</span><span style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold)">${liveTotal}%</span></div>`;
+  list.innerHTML=html;
+  _pieStages=stages;initPieInteraction(stages);initScrollReveal();
+}
+
+// ── Загрузка весов ──
+const DEMO_STAGES_BAR=[{pct:10},{pct:17},{pct:18},{pct:18},{pct:18},{pct:19}];
+
+async function loadWeights(){
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SETTINGS_SHEET)}&range=${SETTINGS_RANGE}`;
+  try{
+    const ctrl=new AbortController();const to=setTimeout(()=>{ctrl.abort();renderStagesBar(DEMO_STAGES_BAR);renderStages(DEMO_STAGES);},5000);
+    const res=await fetch(url,{signal:ctrl.signal});clearTimeout(to);
+    const text=await res.text();
+    const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const stages=json.table.rows.filter(r=>r.c[0]?.v).map((r,i)=>({name:r.c[0]?.v||"—",pct:Math.round((parseFloat(r.c[1]?.v)||0)*100),type:STAGE_TYPES[i]||"—"}));
+    if(stages.length===6){renderStagesBar(stages);renderStages(stages);}
+    else{renderStagesBar(DEMO_STAGES_BAR);renderStages(DEMO_STAGES);}
+  }catch(e){renderStagesBar(DEMO_STAGES_BAR);renderStages(DEMO_STAGES);}
+}
+
+// ── Рейтинг ──
+const DEMO_DATA=[
+  {name:"Никита С.",fac:"ФМЕН",total:78.4,pre:35.2,live:43.2},
+  {name:"Иван П.",fac:"ИФ",total:74.9,pre:36.5,live:38.4},
+  {name:"Александр К.",fac:"ФЭМ",total:71.3,pre:40.0,live:31.3},
+  {name:"Роман Ш.",fac:"ФПсих",total:67.8,pre:24.9,live:42.9},
+  {name:"Дмитрий В.",fac:"ФФК",total:63.2,pre:27.0,live:36.2},
+  {name:"Павел Т.",fac:"ФИВТиБ",total:58.7,pre:28.0,live:30.7},
+  {name:"Михаил Р.",fac:"ФГМУ",total:54.1,pre:21.9,live:32.2},
+  {name:"Сергей Л.",fac:"ФИст",total:49.6,pre:24.0,live:25.6},
+  {name:"Тимур М.",fac:"ФНО",total:44.2,pre:17.1,live:27.1},
+];
+
+function renderRating(data){
+  const list=document.getElementById("ratingList");list.innerHTML="";
+  data.forEach((p,i)=>{
+    const place=i+1;const cls=place===1?"top1":place===2?"top2":place===3?"top3":"";
+    const roman=["I","II","III"][i];
+    const card=document.createElement("div");card.className=`card ${cls}`;
+    card.innerHTML=`<div class="card-inner"><div class="place"><div class="place-num">${place}</div><div class="place-label">${roman?roman+" м.":"место"}</div></div><div class="card-info"><div class="card-name">${p.name}</div><div class="card-fac">${p.fac}</div><div class="breakdown-bar"><div class="bb-pre" style="flex:${p.pre}"></div><div class="bb-live" style="flex:${p.live}"></div></div><div class="breakdown-labels"><div class="bl-item"><div class="bl-dot pre"></div>Предэтапы ${p.pre.toFixed(1)}</div><div class="bl-item"><div class="bl-dot live"></div>Жюри ${p.live.toFixed(1)}</div></div></div><div class="card-score"><div class="score-main">${p.total.toFixed(1)}</div><div class="score-unit">очков</div></div></div>`;
+    list.appendChild(card);
+  });
+  setTimeout(()=>{
+    const cards=document.querySelectorAll(".card:not(.revealed)");
+    const obs=new IntersectionObserver((entries)=>{entries.forEach((e,idx)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add("visible","revealed"),idx*60);obs.unobserve(e.target);}});},{threshold:0.08});
+    cards.forEach(c=>obs.observe(c));
+  },50);
+}
+
+async function loadFromSheets(){
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}&range=${RANGE}`;
+  try{
+    const res=await fetch(url);const text=await res.text();
+    const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const data=json.table.rows.filter(r=>r.c&&r.c[1]&&r.c[1].v).map(r=>({name:r.c[1]?.v||"—",fac:r.c[2]?.v||"—",pre:parseFloat(r.c[3]?.v)||0,live:parseFloat(r.c[4]?.v)||0,total:parseFloat(r.c[5]?.v)||0})).sort((a,b)=>b.total-a.total);
+    renderRating(data);document.getElementById("statusText").textContent="Данные из таблицы · обновлено сейчас";
+  }catch(e){
+    document.getElementById("ratingList").innerHTML=`<div class="error-state">Не удалось загрузить данные.<br><small style="color:var(--muted)">${e.message}</small></div>`;
+    document.getElementById("statusText").textContent="Ошибка загрузки";
+  }
+}
+
+// ── Пример мест → очки ──
+const N=9;const exColors=["rgba(212,175,55,0.9)","rgba(212,175,55,0.75)","rgba(212,175,55,0.6)","rgba(212,175,55,0.45)","rgba(212,175,55,0.35)","rgba(212,175,55,0.28)","rgba(212,175,55,0.2)","rgba(212,175,55,0.14)","rgba(212,175,55,0.08)"];
+const exGrid=document.getElementById("exGrid");
+for(let p=1;p<=N;p++){const score=Math.round(((N-p+1)/N)*100*10)/10;const cell=document.createElement("div");cell.className="ex-cell";cell.innerHTML=`<div class="ex-place-box" style="background:${exColors[p-1]};color:${p<=3?"#0e0e0e":"var(--text)"}">${p}</div><div class="ex-score">${score}</div>`;exGrid.appendChild(cell);}
+
+// ── Инициализация ──
+// Обновлённый рендер лайв-рейтинга на странице инфографики
+async function loadLiveForInfo(){
+  const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}&range=${RANGE}`;
+  try{
+    const res=await fetch(url);const text=await res.text();
+    const json=JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const data=json.table.rows.filter(r=>r.c&&r.c[1]&&r.c[1].v).map(r=>({name:r.c[1]?.v||"—",fac:r.c[2]?.v||"—",total:parseFloat(r.c[5]?.v)||0})).sort((a,b)=>b.total-a.total);
+    const pc=["lp-1","lp-2","lp-3"];
+    document.getElementById("liveRating").innerHTML=data.map((p,i)=>`<div class="live-row"><div class="live-left"><div class="live-place ${pc[i]||'lp-n'}">${i+1}</div><div><div class="live-name">${p.name}</div><div class="live-fac">${p.fac}</div></div></div><div class="live-score">${p.total.toFixed(1)}</div></div>`).join("");
+  }catch(e){document.getElementById("liveRating").innerHTML=`<div class="loading-mini" style="color:var(--muted2)">Не удалось загрузить данные.</div>`;}
+}
+
+if(USE_DEMO){
+  renderRating(DEMO_DATA);document.getElementById("statusText").textContent="Демо-режим";
+  renderStagesBar(DEMO_STAGES_BAR);renderStages(DEMO_STAGES);
+}else{
+  loadWeights();loadFromSheets();loadLiveForInfo();
+  setInterval(loadFromSheets,60000);setInterval(loadWeights,60000);setInterval(loadLiveForInfo,60000);
+}
+
+document.addEventListener("DOMContentLoaded",initScrollReveal);
+</script>
+</body>
+</html>
